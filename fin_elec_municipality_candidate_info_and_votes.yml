@@ -1,0 +1,111 @@
+---
+
+variables:
+
+-
+  name: id
+  label: "Candidate Record ID"
+  info: "ID created for the SDP election datasets to allow simplified matching."
+  variabes: []
+
+-
+  name: name
+  label: "Name"
+  info: ""
+  variabes: []
+
+-
+  name: party
+  label: "Party"
+  info: ""
+  variabes: []
+
+-
+  name: gender
+  label: "Gender"
+  info: ""
+  variabes: []
+
+-
+  name: age
+  label: "Age"
+  info: "Age at the date of election."
+  variabes: []
+
+-
+  name: occ
+  label: "Occupation(s)"
+  info: ""
+  variabes: []
+
+-
+  name: year_elec
+  label: "Year of Election"
+  info: ""
+  variabes: []
+
+-
+  name: cand_num
+  label: "Candidate Number"
+  info: "Candidate number assigned by the Finnish election agency to the candidate. ?Changes per year?"
+  variabes: []
+
+-
+  name: incum
+  label: "Incumbant"
+  info: "Marked yes if they served in this *exact* position beforehand; otherwise no."
+  variabes: []
+
+-
+  name: hppo
+  label: "Highest Prior Political Office"
+  info: "The highest prior political office the candidate held. Can be the same position as the current election."
+  variabes: []
+
+-
+  name: municipality
+  label: "Municipality"
+  info: "The municipality of the election."
+  variabes: []
+
+-
+  name: t_vote#
+  label: "Total votes earned by the candidate in the election."
+  info: ""
+  variabes: []
+
+-
+  name: t_vote%
+  label: "The percentage of total votes earned by the candidate in the election."
+  info: ""
+  variabes: []
+
+-
+  name: p_vote%
+  label: "The percentage of party votes earned by the candidate in the election."
+  info: ""
+  variabes: []
+
+-
+  name: a_vote#
+  label: "Total advance votes earned by the candidate in the election. ?timeframe?"
+  info: ""
+  variabes: []
+
+-
+  name: a_vote%
+  label: "The percentage of advance votes earned by the candidate in the election. ?timeframe?"
+  info: ""
+  variabes: []
+
+-
+  name: ed_vote#
+  label: "Total number of election day votes earned by the candidate in the election."
+  info: ""
+  variabes: []
+
+-
+  name: ed_vote%
+  label: "The percentage of election day votes earned by the candidate in the election."
+  info: ""
+  variabes: []
