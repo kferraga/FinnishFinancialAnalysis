@@ -1,111 +1,205 @@
 ---
+base_loc_string: ""
+files: ["fin_elec_municipality_candidate_finances.csv", "fin_elec_municipality_candidate_info_and_votes.csv"]
 
 variables:
-
 -
-  name: id
+  name: cand_id
   label: "Candidate Record ID"
   info: "ID created for the SDP election datasets to allow simplified matching."
-  variabes: []
-
+  variables: []
 -
-  name: name
+  name: cand_name
   label: "Name"
   info: ""
-  variabes: []
-
+  variables: []
 -
-  name: party
+  name: cand_party
   label: "Party"
   info: ""
-  variabes: []
-
+  variables: []
 -
-  name: gender
+  name: cand_gender
   label: "Gender"
   info: ""
-  variabes: []
-
+  variables: []
 -
-  name: age
+  name: cand_age
   label: "Age"
   info: "Age at the date of election."
-  variabes: []
-
+  variables: []
 -
-  name: occ
+  name: cand_occ
   label: "Occupation(s)"
   info: ""
-  variabes: []
-
+  variables: []
 -
-  name: year_elec
+  name: elec_year
   label: "Year of Election"
   info: ""
-  variabes: []
-
+  variables: []
 -
   name: cand_num
   label: "Candidate Number"
   info: "Candidate number assigned by the Finnish election agency to the candidate. ?Changes per year?"
-  variabes: []
-
+  variables: []
 -
-  name: incum
+  name: cand_incum
   label: "Incumbant"
   info: "Marked yes if they served in this *exact* position beforehand; otherwise no."
-  variabes: []
-
+  variables: []
 -
-  name: hppo
+  name: cand_hppo
   label: "Highest Prior Political Office"
   info: "The highest prior political office the candidate held. Can be the same position as the current election."
-  variabes: []
-
+  variables: []
 -
-  name: municipality
+  name: elec_municipality
   label: "Municipality"
   info: "The municipality of the election."
-  variabes: []
-
+  variables: []
 -
-  name: t_vote#
-  label: "Total votes earned by the candidate in the election."
-  info: ""
-  variabes: []
-
+  name: cand_t_vote#
+  label: "Total Vote #"
+  info: "Total votes earned by the candidate in the election."
+  variables: []
 -
-  name: t_vote%
-  label: "The percentage of total votes earned by the candidate in the election."
-  info: ""
-  variabes: []
-
+  name: cand_t_vote%
+  label: "% of Total Vote"
+  info: "The percentage of total votes earned by the candidate in the election."
+  variables: []
 -
-  name: p_vote%
-  label: "The percentage of party votes earned by the candidate in the election."
-  info: ""
-  variabes: []
-
+  name: cand_p_vote%
+  label: "% of Total Party Vote"
+  info: "The percentage of party votes earned by the candidate in the election."
+  variables: []
 -
-  name: a_vote#
-  label: "Total advance votes earned by the candidate in the election. ?timeframe?"
-  info: ""
-  variabes: []
-
+  name: cand_a_vote#
+  label: "Advance Vote #"
+  info: "Total advance votes earned by the candidate in the election. ?timeframe?"
+  variables: []
 -
-  name: a_vote%
-  label: "The percentage of advance votes earned by the candidate in the election. ?timeframe?"
-  info: ""
-  variabes: []
-
+  name: cand_a_vote%
+  label: "% of Total Advance Vote"
+  info: "The percentage of advance votes earned by the candidate in the election. ?timeframe?"
+  variables: []
 -
-  name: ed_vote#
-  label: "Total number of election day votes earned by the candidate in the election."
-  info: ""
-  variabes: []
-
+  name: cand_ed_vote#
+  label: "Election Day Vote #"
+  info: "Total number of election day votes earned by the candidate in the election."
+  variables: []
 -
-  name: ed_vote%
-  label: "The percentage of election day votes earned by the candidate in the election."
+  name: cand_ed_vote%
+  label: "% of Total Election Day Vote"
+  info: "The percentage of election day votes earned by the candidate in the election."
+  variables: []
+-
+  name: cand_1_total_expenses
+  label: "Total Expenses"
   info: ""
-  variabes: []
+  variables: []
+-
+  name: cand_1.1_election_adverising
+  label: "Election Advertising"
+  info: ""
+  variables: []
+-
+  name: cand_1.1.1_newspapers
+  label: "Newspapers"
+  info: ""
+  variables: []
+-
+  name: cand_1.1.2_radio
+  label: "Radio"
+  info: ""
+  variables: []
+-
+  name: cand_1.1.3_television
+  label: "Television"
+  info: ""
+  variables: []
+-
+  name: cand_1.1.4_information_networks
+  label: "Information Networks"
+  info: ""
+  variables: []
+-
+  name: cand_1.1.5_other_media
+  label: "Other Media"
+  info: ""
+  variables: []
+-
+  name: cand_1.1.6_outdoor_advertising
+  label: "Outdoor Advertising"
+  info: ""
+  variables: []
+-
+  name: cand_1.1.7_procurement_of_ad_material
+  label: "Procurement of Ad Material"
+  info: ""
+  variables: []
+-
+  name: cand_1.2_planning_of_ad
+  label: "Planning of Ad"
+  info: ""
+  variables: []
+-
+  name: cand_1.3_rallies
+  label: "Rallies"
+  info: ""
+  variables: []
+-
+  name: cand_1.4_fundrasing
+  label: "Fundraising"
+  info: ""
+  variables: []
+-
+  name: cand_1.5_other
+  label: "Other"
+  info: ""
+  variables: []
+-
+  name: cand_2_total_funding
+  label: "Total Funding"
+  info: ""
+  variables: []
+-
+  name: cand_2.1_own_funds
+  label: "Own Funds"
+  info: ""
+  variables: []
+-
+  name: cand_2.2_loans
+  label: "Loans"
+  info: ""
+  variables: []
+-
+  name: cand_2.3_private_individuals
+  label: "Private Individuals"
+  info: ""
+  variables: []
+-
+  name: cand_2.4_companies
+  label: "Companies"
+  info: ""
+  variables: []
+-
+  name: cand_2.5_political_party
+  label: "Political Party"
+  info: ""
+  variables: []
+-
+  name: cand_2.6_party_associations
+  label: "Party Associations"
+  info: ""
+  variables: []
+-
+  name: cand_2.7_others
+  label: "Others"
+  info: ""
+  variables: []
+-
+  name: cand_2.8_transfers
+  label: "Transfers"
+  info: ""
+  variables: []
