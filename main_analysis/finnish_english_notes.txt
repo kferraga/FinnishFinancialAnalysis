@@ -1,0 +1,14 @@
+-----
+FILE NAMES
+-----
+Liite = Appendix
+Eduskuntavaalit -> Eduskunta + vaalit = Parlimentary Election
+- (Eduskunta is specifically for the FINNISH parliment. Others are parlamentti.)
+Kuntavaalit -> Kunta + vaalit = Municipality Elections
+Rahoitusrivit -> Rahoitus + rivi*t* = Financial Lines
+- (Represents financial information/contributions, at least in this instance.)
+
+
+-----
+FILE CONTENTS
+-----

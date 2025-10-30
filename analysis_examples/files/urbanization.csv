@@ -1,0 +1,536 @@
+"Year","Area","Degree of urbanisation, %"
+"2023","Akaa",88.1
+"2023","Alajärvi",62.9
+"2023","Alavieska",52.4
+"2023","Alavus",62.0
+"2023","Asikkala",65.4
+"2023","Askola",54.1
+"2023","Aura",71.4
+"2023","Brändö",0.0
+"2023","Eckerö",39.5
+"2023","Enonkoski",38.6
+"2023","Enontekiö",27.6
+"2023","Espoo",99.5
+"2023","Eura",71.8
+"2023","Eurajoki",64.5
+"2023","Evijärvi",36.4
+"2023","Finström",42.7
+"2023","Forssa",91.6
+"2023","Föglö",0.0
+"2023","Geta",0.0
+"2023","Haapajärvi",68.9
+"2023","Haapavesi",61.9
+"2023","Hailuoto",54.2
+"2023","Halsua",44.7
+"2023","Hamina",87.9
+"2023","Hammarland",42.0
+"2023","Hankasalmi",47.2
+"2023","Hanko",95.4
+"2023","Harjavalta",93.4
+"2023","Hartola",53.5
+"2023","Hattula",76.0
+"2023","Hausjärvi",65.4
+"2023","Heinola",91.2
+"2023","Heinävesi",44.1
+"2023","Helsinki",99.9
+"2023","Hirvensalmi",34.6
+"2023","Hollola",80.4
+"2023","Huittinen",71.9
+"2023","Humppila",62.6
+"2023","Hyrynsalmi",56.6
+"2023","Hyvinkää",94.3
+"2023","Hämeenkyrö",60.9
+"2023","Hämeenlinna",88.6
+"2023","Ii",79.5
+"2023","Iisalmi",76.8
+"2023","Iitti",60.1
+"2023","Ikaalinen",61.0
+"2023","Ilmajoki",77.2
+"2023","Ilomantsi",53.7
+"2023","Imatra",97.5
+"2023","Inari",65.9
+"2023","Ingå",44.3
+"2023","Isojoki",42.3
+"2023","Isokyrö",70.0
+"2023","Janakkala",77.3
+"2023","Joensuu",90.9
+"2023","Jokioinen",62.1
+"2023","Jomala",70.4
+"2023","Joroinen",58.5
+"2023","Joutsa",58.9
+"2023","Juuka",47.1
+"2023","Juupajoki",43.0
+"2023","Juva",51.2
+"2023","Jyväskylä",95.5
+"2023","Jämijärvi",36.7
+"2023","Jämsä",74.4
+"2023","Järvenpää",99.9
+"2023","Kaarina",96.1
+"2023","Kaavi",45.0
+"2023","Kajaani",88.6
+"2023","Kalajoki",77.5
+"2023","Kangasala",86.6
+"2023","Kangasniemi",51.2
+"2023","Kankaanpää",69.9
+"2023","Kannonkoski",35.7
+"2023","Kannus",75.4
+"2023","Karijoki",40.0
+"2023","Karkkila",86.1
+"2023","Karstula",51.8
+"2023","Karvia",34.9
+"2023","Kaskinen",99.8
+"2023","Kauhajoki",67.5
+"2023","Kauhava",67.2
+"2023","Kauniainen",100.0
+"2023","Kaustinen",67.3
+"2023","Keitele",49.2
+"2023","Kemi",99.4
+"2023","Kemijärvi",70.2
+"2023","Keminmaa",88.9
+"2023","Kimitoön",44.7
+"2023","Kempele",96.5
+"2023","Kerava",99.9
+"2023","Keuruu",71.2
+"2023","Kihniö",34.5
+"2023","Kinnula",53.4
+"2023","Kirkkonummi",91.8
+"2023","Kitee",55.0
+"2023","Kittilä",57.8
+"2023","Kiuruvesi",50.6
+"2023","Kivijärvi",51.6
+"2023","Kokemäki",59.4
+"2023","Kokkola",89.1
+"2023","Kolari",50.7
+"2023","Konnevesi",40.3
+"2023","Kontiolahti",74.0
+"2023","Korsnäs",55.3
+"2023","Koski Tl",53.5
+"2023","Kotka",98.2
+"2023","Kouvola",86.1
+"2023","Kristinestad",69.3
+"2023","Kronoby",58.4
+"2023","Kuhmo",64.3
+"2023","Kuhmoinen",55.4
+"2023","Kumlinge",0.0
+"2023","Kuopio",87.5
+"2023","Kuortane",37.1
+"2023","Kurikka",62.4
+"2023","Kustavi",37.6
+"2023","Kuusamo",65.5
+"2023","Kyyjärvi",57.5
+"2023","Kärkölä",66.8
+"2023","Kärsämäki",45.7
+"2023","Kökar",0.0
+"2023","Lahti",97.6
+"2023","Laihia",82.8
+"2023","Laitila",73.0
+"2023","Lapinjärvi",28.1
+"2023","Lapinlahti",54.1
+"2023","Lappajärvi",54.4
+"2023","Lappeenranta",90.5
+"2023","Lapua",79.1
+"2023","Laukaa",73.8
+"2023","Lemi",54.6
+"2023","Lemland",33.7
+"2023","Lempäälä",89.9
+"2023","Leppävirta",58.1
+"2023","Lestijärvi",33.6
+"2023","Lieksa",69.7
+"2023","Lieto",84.8
+"2023","Liminka",81.6
+"2023","Liperi",58.5
+"2023","Lohja",82.9
+"2023","Loimaa",68.5
+"2023","Loppi",56.1
+"2023","Loviisa",74.6
+"2023","Luhanka",0.0
+"2023","Lumijoki",66.8
+"2023","Lumparland",0.0
+"2023","Larsmo",90.6
+"2023","Luumäki",62.3
+"2023","Malax",72.1
+"2023","Mariehamn",99.3
+"2023","Marttila",45.8
+"2023","Masku",82.3
+"2023","Merijärvi",37.0
+"2023","Merikarvia",57.1
+"2023","Miehikkälä",30.7
+"2023","Mikkeli",81.5
+"2023","Muhos",80.1
+"2023","Multia",50.0
+"2023","Muonio",51.9
+"2023","Korsholm",81.2
+"2023","Muurame",89.5
+"2023","Mynämäki",66.5
+"2023","Myrskylä",47.0
+"2023","Mäntsälä",74.7
+"2023","Mänttä-Vilppula",83.2
+"2023","Mäntyharju",63.1
+"2023","Naantali",86.5
+"2023","Nakkila",74.6
+"2023","Nivala",66.1
+"2023","Nokia",91.9
+"2023","Nousiainen",68.9
+"2023","Nurmes",60.9
+"2023","Nurmijärvi",89.4
+"2023","Närpes",60.1
+"2023","Orimattila",68.1
+"2023","Oripää",52.5
+"2023","Orivesi",72.3
+"2023","Oulainen",75.0
+"2023","Oulu",96.9
+"2023","Outokumpu",71.6
+"2023","Padasjoki",49.2
+"2023","Paimio",80.6
+"2023","Paltamo",59.2
+"2023","Pargas",67.9
+"2023","Parikkala",45.6
+"2023","Parkano",68.7
+"2023","Pedersöre",73.7
+"2023","Pelkosenniemi",36.0
+"2023","Pello",54.0
+"2023","Perho",31.0
+"2023","Pertunmaa",41.4
+"2023","Petäjävesi",56.6
+"2023","Pieksämäki",75.2
+"2023","Pielavesi",43.0
+"2023","Jakobstad",98.7
+"2023","Pihtipudas",48.3
+"2023","Pirkkala",97.9
+"2023","Polvijärvi",29.3
+"2023","Pomarkku",62.8
+"2023","Pori",94.2
+"2023","Pornainen",66.2
+"2023","Porvoo",85.7
+"2023","Posio",41.6
+"2023","Pudasjärvi",50.9
+"2023","Pukkila",39.9
+"2023","Punkalaidun",41.2
+"2023","Puolanka",56.9
+"2023","Puumala",50.3
+"2023","Pyhtää",75.0
+"2023","Pyhäjoki",69.8
+"2023","Pyhäjärvi",53.8
+"2023","Pyhäntä",57.4
+"2023","Pyhäranta",42.1
+"2023","Pälkäne",56.7
+"2023","Pöytyä",53.7
+"2023","Raahe",87.1
+"2023","Raseborg",77.9
+"2023","Raisio",99.4
+"2023","Rantasalmi",39.6
+"2023","Ranua",48.7
+"2023","Rauma",93.1
+"2023","Rautalampi",48.6
+"2023","Rautavaara",44.2
+"2023","Rautjärvi",50.0
+"2023","Reisjärvi",44.9
+"2023","Riihimäki",97.3
+"2023","Ristijärvi",41.9
+"2023","Rovaniemi",90.7
+"2023","Ruokolahti",60.8
+"2023","Ruovesi",49.8
+"2023","Rusko",81.0
+"2023","Rääkkylä",25.3
+"2023","Saarijärvi",57.3
+"2023","Salla",48.2
+"2023","Salo",75.9
+"2023","Saltvik",50.4
+"2023","Sastamala",67.5
+"2023","Sauvo",44.7
+"2023","Savitaipale",53.1
+"2023","Savonlinna",77.7
+"2023","Savukoski",39.3
+"2023","Seinäjoki",92.0
+"2023","Sievi",54.2
+"2023","Siikainen",29.8
+"2023","Siikajoki",46.9
+"2023","Siikalatva",47.2
+"2023","Siilinjärvi",81.1
+"2023","Simo",54.1
+"2023","Sipoo",85.3
+"2023","Siuntio",51.6
+"2023","Sodankylä",61.2
+"2023","Soini",49.7
+"2023","Somero",58.6
+"2023","Sonkajärvi",44.0
+"2023","Sotkamo",60.8
+"2023","Sottunga",0.0
+"2023","Sulkava",42.0
+"2023","Sund",0.0
+"2023","Suomussalmi",63.2
+"2023","Suonenjoki",71.8
+"2023","Sysmä",52.8
+"2023","Säkylä",73.4
+"2023","Taipalsaari",59.1
+"2023","Taivalkoski",47.0
+"2023","Taivassalo",38.9
+"2023","Tammela",52.9
+"2023","Tampere",98.6
+"2023","Tervo",36.0
+"2023","Tervola",35.4
+"2023","Teuva",66.5
+"2023","Tohmajärvi",35.4
+"2023","Toholampi",52.5
+"2023","Toivakka",43.2
+"2023","Tornio",87.6
+"2023","Turku",99.1
+"2023","Tuusniemi",39.3
+"2023","Tuusula",95.4
+"2023","Tyrnävä",70.9
+"2023","Ulvila",85.5
+"2023","Urjala",49.8
+"2023","Utajärvi",50.3
+"2023","Utsjoki",28.9
+"2023","Uurainen",46.6
+"2023","Nykarleby",64.2
+"2023","Uusikaupunki",76.8
+"2023","Vaala",43.0
+"2023","Vaasa",98.4
+"2023","Valkeakoski",88.5
+"2023","Vantaa",99.8
+"2023","Varkaus",91.4
+"2023","Vehmaa",47.1
+"2023","Vesanto",40.5
+"2023","Vesilahti",57.1
+"2023","Veteli",56.1
+"2023","Vieremä",39.3
+"2023","Vihti",75.5
+"2023","Viitasaari",57.8
+"2023","Vimpeli",68.8
+"2023","Virolahti",46.9
+"2023","Virrat",52.7
+"2023","Vårdö",0.0
+"2023","Vörå",51.1
+"2023","Ylitornio",48.3
+"2023","Ylivieska",86.9
+"2023","Ylöjärvi",89.4
+"2023","Ypäjä",41.7
+"2023","Ähtäri",58.4
+"2023","Äänekoski",76.7
+"2023","MA1 MAINLAND FINLAND",87.3
+"2023","SA1 Helsinki-Uusimaa",96.0
+"2023","SA2 Southern Finland",86.3
+"2023","SA3 Western Finland",84.5
+"2023","SA4 Northern and Eastern Finland",79.2
+"2023","MK01 Uusimaa",96.0
+"2023","MK02 Southwest Finland",86.5
+"2023","MK04 Satakunta",84.1
+"2023","MK05 Kanta-Häme",83.1
+"2023","MK06 Pirkanmaa",89.1
+"2023","MK07 Päijät-Häme",87.9
+"2023","MK08 Kymenlaakso",88.5
+"2023","MK09 South Karelia",84.3
+"2023","MK10 South Savo",72.5
+"2023","MK11 North Savo",77.4
+"2023","MK12 North Karelia",74.3
+"2023","MK13 Central Finland",82.2
+"2023","MK14 South Ostrobothnia",74.5
+"2023","MK15 Ostrobothnia",85.1
+"2023","MK16 Central Ostrobothnia",80.3
+"2023","MK17 North Ostrobothnia",85.0
+"2023","MK18 Kainuu",75.3
+"2023","MK19 Lapland",78.4
+"2023","MA2 ÅLAND",64.2
+"2023","SA5 Åland",64.2
+"2023","MK21 Åland",64.2
+"2023","YTA1 Southern Finland collaborative area",94.0
+"2023","YTA2 Eastern Finland collaborative area",77.6
+"2023","YTA3 Inland Finland collaborative area",84.9
+"2023","YTA4 Western Finland collaborative area",85.6
+"2023","YTA5 Northern Finland collaborative area",82.0
+"2023","YTA6 Åland",64.2
+"2023","HVA01 East Uusimaa wellbeing services county",79.6
+"2023","HVA02 Central Uusimaa wellbeing services county",92.0
+"2023","HVA03 West Uusimaa wellbeing services county",93.3
+"2023","HVA04 Vantaa and Kerava wellbeing services county",99.8
+"2023","HVA05 Southwest Finland wellbeing services county",86.5
+"2023","HVA06 Satakunta wellbeing services county",84.1
+"2023","HVA07 Kanta-Häme wellbeing services county",83.1
+"2023","HVA08 Pirkanmaa wellbeing services county",89.1
+"2023","HVA09 Päijät-Häme wellbeing services county",87.9
+"2023","HVA10 Kymenlaakso wellbeing services county",88.5
+"2023","HVA11 South Karelia wellbeing services county",84.3
+"2023","HVA12 South Savo wellbeing services county",72.5
+"2023","HVA13 North Savo wellbeing services county",77.4
+"2023","HVA14 North Karelia wellbeing services county",74.3
+"2023","HVA15 Central Finland wellbeing services county",82.2
+"2023","HVA16 South Ostrobothnia wellbeing services county",74.5
+"2023","HVA17 Ostrobothnia wellbeing services county",85.1
+"2023","HVA18 Central Ostrobothnia wellbeing services county",80.3
+"2023","HVA19 North Ostrobothnia wellbeing services county",85.0
+"2023","HVA20 Kainuu wellbeing services county",75.3
+"2023","HVA21 Lapland wellbeing services county",78.4
+"2023","HVA90 City of Helsinki",99.9
+"2023","HVA91 Åland",64.2
+"2023","SK011 Helsinki",97.3
+"2023","SK014 Raasepori",76.8
+"2023","SK015 Porvoo",80.8
+"2023","SK016 Loviisa",67.9
+"2023","SK021 Åboland-Turunmaa",61.0
+"2023","SK022 Salo",73.4
+"2023","SK023 Turku",94.3
+"2023","SK024 Vakka-Suomi",68.0
+"2023","SK025 Loimaa",62.2
+"2023","SK041 Rauma",83.6
+"2023","SK043 Pori",87.7
+"2023","SK044 Pohjois-Satakunta",59.4
+"2023","SK051 Hämeenlinna",85.4
+"2023","SK052 Riihimäki",84.4
+"2023","SK053 Forssa",74.4
+"2023","SK061 Luoteis-Pirkanmaa",61.0
+"2023","SK063 Etelä-Pirkanmaa",84.1
+"2023","SK064 Tampere",93.2
+"2023","SK068 Lounais-Pirkanmaa",64.8
+"2023","SK069 Ylä-Pirkanmaa",64.6
+"2023","SK071 Lahti",87.9
+"2023","SK081 Kouvola",86.1
+"2023","SK082 Kotka-Hamina",90.9
+"2023","SK091 Lappeenranta",84.9
+"2023","SK093 Imatra",82.8
+"2023","SK101 Mikkeli",74.5
+"2023","SK103 Savonlinna",71.0
+"2023","SK105 Pieksämäki",69.2
+"2023","SK111 Ylä-Savo",60.1
+"2023","SK112 Kuopio",86.5
+"2023","SK113 Koillis-Savo",42.8
+"2023","SK114 Varkaus",77.8
+"2023","SK115 Sisä-Savo",58.1
+"2023","SK122 Joensuu",79.1
+"2023","SK124 Keski-Karjala",46.3
+"2023","SK125 Pielisen Karjala",65.5
+"2023","SK131 Jyväskylä",89.6
+"2023","SK132 Joutsa",50.3
+"2023","SK133 Keuruu",68.4
+"2023","SK134 Jämsä",74.4
+"2023","SK135 Äänekoski",72.2
+"2023","SK138 Saarijärvi-Viitasaari",54.0
+"2023","SK141 Suupohja",63.4
+"2023","SK142 Seinäjoki",81.2
+"2023","SK144 Kuusiokunnat",56.7
+"2023","SK146 Järviseutu",57.9
+"2023","SK152 Vaasa",89.4
+"2023","SK153 Sydösterbotten",66.3
+"2023","SK154 Jakobstadsregionen",81.9
+"2023","SK161 Kaustinen",52.2
+"2023","SK162 Kokkola",87.8
+"2023","SK171 Oulu",94.7
+"2023","SK173 Oulunkaari",62.5
+"2023","SK174 Raahe",79.3
+"2023","SK175 Haapavesi-Siikalatva",55.7
+"2023","SK176 Nivala-Haapajärvi",60.7
+"2023","SK177 Ylivieska",75.5
+"2023","SK178 Koillismaa",61.8
+"2023","SK181 Kehys-Kainuu",62.1
+"2023","SK182 Kajaani",80.2
+"2023","SK191 Rovaniemi",88.5
+"2023","SK192 Kemi-Tornio",87.6
+"2023","SK193 Torniolaakso",50.9
+"2023","SK194 Itä-Lappi",55.9
+"2023","SK196 Tunturi-Lappi",51.1
+"2023","SK197 Pohjois-Lappi",61.0
+"2023","SK211 Mariehamns stad",99.3
+"2023","SK212 Ålands landsbygd",46.9
+"2023","SK213 Ålands skärgård",0.0
+"2023","ELY01 Uusimaa ELY Centre",96.0
+"2023","ELY02 Southwest Finland ELY Centre",86.5
+"2023","ELY03 Satakunta ELY Centre",84.1
+"2023","ELY04 Häme ELY Centre",85.7
+"2023","ELY05 Pirkanmaa ELY Centre",89.1
+"2023","ELY06 Southeast Finland  ELY Centre",86.6
+"2023","ELY07 South Savo ELY Centre",72.5
+"2023","ELY08 North Savo ELY Centre",77.4
+"2023","ELY09 North Karelia ELY Centre",74.3
+"2023","ELY10 Central Finland ELY Centre",82.2
+"2023","ELY11 South Ostrobothnia ELY Centre",74.5
+"2023","ELY12 Ostrobothnia ELY Centre",83.8
+"2023","ELY13 North Ostrobothnia ELY Centre",85.0
+"2023","ELY14 Kainuu ELY Centre",75.3
+"2023","ELY15 Lapland ELY Centre",78.4
+"2023","ELY16 Åland",64.2
+"2023","AVI1 Southern Finland AVI",93.3
+"2023","AVI2 Southwestern Finland AVI",85.8
+"2023","AVI3 Eastern Finland AVI",75.3
+"2023","AVI4 Western and Inland Finland AVI",84.3
+"2023","AVI5 Northern Finland AVI",83.6
+"2023","AVI6 Lapland AVI",78.4
+"2023","AVI7 State Department of Åland",64.2
+"2023","TK1 Urban municipalities",95.1
+"2023","TK2 Semi-urban municipalities",74.8
+"2023","TK3 Rural municipalities",53.9
+"2023","VP01 Helsinki constituency",99.9
+"2023","VP02 Uusimaa constituency",93.5
+"2023","VP03 Varsinais-Suomi constituency",86.5
+"2023","VP04 Satakunta constituency",84.1
+"2023","VP06 Häme constituency",85.7
+"2023","VP07 Pirkanmaa constituency",89.1
+"2023","VP08 Southeast Finland constituency",82.2
+"2023","VP09 Savo-Karelia constituency",76.2
+"2023","VP10 Vaasa constituency",79.7
+"2023","VP11 Central Finland constituency",82.2
+"2023","VP12 Oulu constituency",83.6
+"2023","VP13 Lapland constituency",78.4
+"2023","VP05 Åland constituency",64.2
+"2023","PL5500 Helsinki Police Department",99.9
+"2023","PL5530 Western Uusimaa Police Department",93.3
+"2023","PL5560 Eastern Uusimaa Police Department",93.7
+"2023","PL5590 Häme Police Department",85.7
+"2023","PL5620 Southeastern Finland Police Department",86.6
+"2023","PL5650 Southwestern Finland Police Department",85.8
+"2023","PL5680 Central Finland Police Department",86.8
+"2023","PL5710 Ostrobothnia Police Department",79.7
+"2023","PL5740 Eastern Finland Police Department",75.3
+"2023","PL5770 Oulu Police Department",83.6
+"2023","PL5800 Lapland Police Department",78.4
+"2023","PL5830 Ålands polismyndighet",64.2
+"2023","HO1 Helsinki Court of Appeal",95.9
+"2023","HO2 Turku Court of Appeal",86.6
+"2023","HO3 Eastern Finland Court of Appeal",81.0
+"2023","HO4 Vaasa Court of Appeal",81.5
+"2023","HO6 Rovaniemi Court of Appeal",82.2
+"2023","KO706 Helsinki District Court",99.9
+"2023","KO708 Kanta-Häme District Court",83.1
+"2023","KO713 North Karelia District Court",74.3
+"2023","KO715 Central Finland District Court",82.2
+"2023","KO717 Kainuu District Court",75.3
+"2023","KO725 Kymenlaakso District Court",88.9
+"2023","KO726 North Savo District Court",77.4
+"2023","KO729 Päijät-Häme District Court",87.9
+"2023","KO730 Lapland District Court",78.4
+"2023","KO731 South Karelia District Court",84.3
+"2023","KO736 South Savo District Court",72.5
+"2023","KO742 Oulu District Court",85.0
+"2023","KO747 Satakunta District Court",84.1
+"2023","KO748 Eastern Uusimaa District Court",93.5
+"2023","KO750 Western Uusimaa District Court",93.3
+"2023","KO757 South Ostrobothnia District Court",74.5
+"2023","KO758 Pirkanmaa District Court",89.1
+"2023","KO761 Southwest Finland District Court",86.5
+"2023","KO764 Ostrobothnia District Court",83.8
+"2023","KO769 Åland District Court",64.2
+"2023","FI1 MAINLAND FINLAND",87.3
+"2023","FI19 Western Finland",84.5
+"2023","FI198 Central Finland",82.2
+"2023","FI199 South Ostrobothnia",74.5
+"2023","FI19A Ostrobothnia",85.1
+"2023","FI196 Satakunta",84.1
+"2023","FI19B Pirkanmaa",89.1
+"2023","FI1B Helsinki-Uusimaa",96.0
+"2023","FI1B1 Helsinki-Uusimaa",96.0
+"2023","FI1C Southern Finland",86.3
+"2023","FI1C1 Southwest Finland",86.5
+"2023","FI1C2 Kanta-Häme",83.1
+"2023","FI1C6 Päijät-Häme",87.9
+"2023","FI1C7 Kymenlaakso",88.5
+"2023","FI1C5 South Karelia",84.3
+"2023","FI1D Northern and Eastern Finland",79.2
+"2023","FI1DA South Savo",72.5
+"2023","FI1DB North Savo",77.4
+"2023","FI1DC North Karelia",74.3
+"2023","FI1D5 Central Ostrobothnia",80.3
+"2023","FI1D7Lapland",78.4
+"2023","FI1D8 Kainuu",75.3
+"2023","FI1D9 North Ostrobothnia",85.0
+"2023","FI2 ÅLAND",64.2
+"2023","FI20 Åland",64.2
+"2023","FI200 Åland",64.2
