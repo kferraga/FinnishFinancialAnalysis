@@ -4,6 +4,7 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 from sklearn.linear_model import LinearRegression
+import os.path
 from scipy import stats
 import statsmodels
 
@@ -33,7 +34,10 @@ def load_data():
     Replace this with your actual data loading.
     For now, generating synthetic data to demonstrate structure.
     """
-    data = pd.read_csv("D:/GitHub/SDPAnalysis/main_analysis/files/outputs/financial_analysis_data.csv")
+    dir_name = os.path.abspath(os.path.dirname(__file__))
+    location = os.path.join(dir_name, 'files\\outputs\\financial_analysis_data.csv')
+
+    data = pd.read_csv(location)
     return data
 
 @st.cache_resource
