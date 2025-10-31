@@ -12,3 +12,15 @@ Rahoitusrivit -> Rahoitus + rivi*t* = Financial Lines
 -----
 FILE CONTENTS
 -----
+Ehdokasnumero = Ehdokas + numero = Candidate number
+Kuntanumero = Kunta + numero = Municipality number
+Etunimet = Etun + nimet = First names
+Sukunimi = Suku + nimi = Last names
+Arvo/ammatti/tehtava = Rank/profession/task
+- (What job did they have before?)
+Vaalipiiri/Kunta = Vaali + piiri/Kunta = Electoral district/municipality
+Puolue = Party
+Ehdolla molemmissa samanaikaisissa vaaleissa = Nominated in both simultaneous elections
+Aluevaalit = Regional elections
+- (Valittu = chosen, Varasijalla = in reserve)
+Saapumispaiva = Saapumis + paiva = Arrival date
