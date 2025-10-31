@@ -33,7 +33,7 @@ def load_data():
     For now, generating synthetic data to demonstrate structure.
     """
     dir_name = os.path.abspath(os.path.dirname(__file__))
-    location = os.path.join(dir_name, 'files\\outputs\\financial_analysis_data.csv')
+    location = os.path.join(dir_name, 'files/outputs/financial_analysis_data.csv')
 
     data = pd.read_csv(location)
     return data
