@@ -5,6 +5,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from sklearn.linear_model import LinearRegression
 import os.path
+import statsmodels
 
 # Page configuration
 st.set_page_config(
