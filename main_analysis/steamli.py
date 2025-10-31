@@ -5,6 +5,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from sklearn.linear_model import LinearRegression
 from scipy import stats
+import statsmodels
 
 # Page configuration
 st.set_page_config(
@@ -16,7 +17,7 @@ st.set_page_config(
 # Sidebar navigation
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", [
-    "Executive Summary",
+    "Summary",
     "Interactive Explorer", 
     "Scenario Simulator",
     "Deep Dive"
@@ -44,7 +45,10 @@ def load_data():
         'spending': np.random.exponential(50000, n_candidates) + 10000,
         'vote_share': np.random.beta(2, 5, n_candidates) * 100,
         'incumbent': np.random.choice([True, False], n_candidates),
-        'won': np.random.choice([True, False], n_candidates)
+        'won': np.random.choice([True, False], n_candidates),
+        "tf_self": np.random.exponential(30000, n_candidates) + 10000,
+        "tf_party": np.random.exponential(20000, n_candidates) + 10000,
+        "num_candidates": np.random.choice([5, 15, 25, 30], n_candidates)
     })
     
     # Add some correlation between spending and vote share
@@ -56,7 +60,7 @@ def load_data():
 @st.cache_resource
 def train_model(data):
     """Train regression model and identify anomalies"""
-    X = data[['spending']].values
+    X = data[['spending', "num_candidates"]].values
     y = data['vote_share'].values
     
     model = LinearRegression()
@@ -83,12 +87,12 @@ data = load_data()
 model, data = train_model(data)
 
 # -----------------------------
-# PAGE 1: EXECUTIVE SUMMARY
+# PAGE 1: SUMMARY
 # -----------------------------
 
-if page == "Executive Summary":
-    st.title("📊 Campaign Finance Effectiveness Analysis")
-    st.markdown("### Executive Summary")
+if page == "Summary":
+    st.title("Campaign Finance Effectiveness Analysis")
+    st.markdown("### Summary")
     
     # Key metrics
     col1, col2, col3, col4 = st.columns(4)
@@ -97,12 +101,12 @@ if page == "Executive Summary":
         st.metric("Total Candidates", f"{len(data):,}")
     with col2:
         avg_spending = data['spending'].mean()
-        st.metric("Avg Spending", f"${avg_spending:,.0f}")
+        st.metric("Avg Spending", f"€{avg_spending:,.0f}")
     with col3:
         anomaly_pct = (data['is_anomaly'].sum() / len(data)) * 100
         st.metric("Anomalies", f"{anomaly_pct:.1f}%")
     with col4:
-        r_squared = model.score(data[['spending']], data['vote_share'])
+        r_squared = model.score(data[['spending', "num_candidates"]], data['vote_share'])
         st.metric("Model R²", f"{r_squared:.3f}")
     
     st.markdown("---")
@@ -113,31 +117,38 @@ if page == "Executive Summary":
     with col1:
         st.subheader("Spending Effectiveness Overview")
         
+        # Add toggle for normalization
+        normalize_by_candidates = st.checkbox("Normalize by number of candidates", value=False)
+        
+        # Prepare data based on normalization choice
+        if normalize_by_candidates:
+            plot_data = data.copy()
+            plot_data['spending_plot'] = plot_data['spending'] / plot_data['num_candidates']
+            plot_data['vote_share_plot'] = plot_data['vote_share'] / plot_data['num_candidates']
+            x_label = 'Spending per Candidate (€)'
+            y_label = 'Vote Share per Candidate (%)'
+        else:
+            plot_data = data.copy()
+            plot_data['spending_plot'] = plot_data['spending']
+            plot_data['vote_share_plot'] = plot_data['vote_share']
+            x_label = 'Total Spending (€)'
+            y_label = 'Vote Share (%)'
+        
         fig = px.scatter(
-            data,
-            x='spending',
-            y='vote_share',
+            plot_data,
+            x='spending_plot',
+            y='vote_share_plot',
             color='anomaly_type',
             color_discrete_map={
                 'Normal': '#1f77b4',
                 'Overperformer': '#2ca02c',
                 'Underperformer': '#d62728'
             },
-            hover_data=['name', 'party', 'district_type'],
-            labels={'spending': 'Total Spending ($)', 'vote_share': 'Vote Share (%)'},
-            title="Campaign Spending vs Vote Share"
+            hover_data=['name', 'party', 'district_type', 'num_candidates'],
+            labels={'spending_plot': x_label, 'vote_share_plot': y_label},
+            title="Campaign Spending vs Vote Share" + (" (Normalized)" if normalize_by_candidates else ""),
+            trendline="ols"
         )
-        
-        # Add regression line
-        x_range = np.linspace(data['spending'].min(), data['spending'].max(), 100)
-        y_pred = model.predict(x_range.reshape(-1, 1))
-        fig.add_trace(go.Scatter(
-            x=x_range, 
-            y=y_pred, 
-            mode='lines',
-            name='Regression Line',
-            line=dict(color='black', dash='dash')
-        ))
         
         st.plotly_chart(fig, use_container_width=True)
     
@@ -149,17 +160,17 @@ if page == "Executive Summary":
         
         st.markdown(f"""
         **Overperformers** ({len(overperformers)} candidates)
-        - Avg spending: ${overperformers['spending'].mean():,.0f}
+        - Avg spending: €{overperformers['spending'].mean():,.0f}
         - Avg vote share: {overperformers['vote_share'].mean():.1f}%
         - Most efficient in: {overperformers['district_type'].mode()[0] if len(overperformers) > 0 else 'N/A'}
         
         **Underperformers** ({len(underperformers)} candidates)
-        - Avg spending: ${underperformers['spending'].mean():,.0f}
+        - Avg spending: €{underperformers['spending'].mean():,.0f}
         - Avg vote share: {underperformers['vote_share'].mean():.1f}%
         - Most common in: {underperformers['district_type'].mode()[0] if len(underperformers) > 0 else 'N/A'}
         """)
         
-        st.info("💡 Every $10,000 spent is associated with approximately "
+        st.info("💡 Every €10,000 spent is associated with approximately "
                 f"{model.coef_[0] * 10000:.2f} percentage point increase in vote share.")
     
     # Party comparison
@@ -175,17 +186,16 @@ if page == "Executive Summary":
 # -----------------------------
 # PAGE 2: INTERACTIVE EXPLORER
 # -----------------------------
-
 elif page == "Interactive Explorer":
-    st.title("🔍 Interactive Data Explorer")
+    st.title("Interactive Data Explorer")
     
-    # Filters
+    # SIDEBAR (Filters for people to interact with the data)
     st.sidebar.header("Filters")
     
     selected_years = st.sidebar.multiselect(
         "Election Year",
-        options=sorted(data['election_year'].unique()),
-        default=sorted(data['election_year'].unique())
+        options=sorted(data['election_year'].unique()), # What options are available to select
+        default=sorted(data['election_year'].unique()) # What options are pre-selected
     )
     
     selected_parties = st.sidebar.multiselect(
@@ -194,14 +204,14 @@ elif page == "Interactive Explorer":
         default=sorted(data['party'].unique())
     )
     
-    selected_districts = st.sidebar.multiselect(
-        "District Type",
-        options=sorted(data['district_type'].unique()),
-        default=sorted(data['district_type'].unique())
-    )
+    # selected_districts = st.sidebar.multiselect(
+    #     "District Type",
+    #     options=sorted(data['district_type'].unique()),
+    #     default=sorted(data['district_type'].unique())
+    # )
     
     spending_range = st.sidebar.slider(
-        "Spending Range ($)",
+        "Spending Range (€)",
         min_value=int(data['spending'].min()),
         max_value=int(data['spending'].max()),
         value=(int(data['spending'].min()), int(data['spending'].max())),
@@ -214,7 +224,7 @@ elif page == "Interactive Explorer":
     filtered_data = data[
         (data['election_year'].isin(selected_years)) &
         (data['party'].isin(selected_parties)) &
-        (data['district_type'].isin(selected_districts)) &
+        # (data['district_type'].isin(selected_districts)) &
         (data['spending'] >= spending_range[0]) &
         (data['spending'] <= spending_range[1])
     ]
@@ -225,7 +235,7 @@ elif page == "Interactive Explorer":
     st.info(f"Showing {len(filtered_data):,} candidates (filtered from {len(data):,} total)")
     
     # Visualization tabs
-    tab1, tab2, tab3 = st.tabs(["Scatter Plot", "Distribution", "Top Performers"])
+    tab1, tab2, tab3, tab4 = st.tabs(["Scatter Plot", "Distribution", "Top Performers", "Funding Breakdown"])
     
     with tab1:
         color_by = st.selectbox("Color by", ['party', 'district_type', 'anomaly_type', 'election_year'])
@@ -236,7 +246,7 @@ elif page == "Interactive Explorer":
             y='vote_share',
             color=color_by,
             hover_data=['name', 'party', 'district_type', 'election_year'],
-            labels={'spending': 'Total Spending ($)', 'vote_share': 'Vote Share (%)'}
+            labels={'spending': 'Total Spending (€)', 'vote_share': 'Vote Share (%)'}
         )
         st.plotly_chart(fig, use_container_width=True)
     
@@ -261,6 +271,59 @@ elif page == "Interactive Explorer":
             filtered_data['anomaly_type'] == 'Underperformer'
         ].nsmallest(10, 'residual')[['name', 'party', 'spending', 'vote_share', 'predicted_vote_share', 'residual']]
         st.dataframe(top_underperformers, use_container_width=True)
+    
+    with tab4:
+        st.subheader("Funding Source by Party")
+        
+        # TF represents total funding, so any columns marked tf_ are subsidiaries
+        tf_columns = [col for col in filtered_data.columns if col.startswith('tf_')]
+        
+        if len(tf_columns) == 0:
+            st.warning("No spending category columns (tf_*) found in the data.")
+        else:
+            # Group by party and calculate average spending
+            party_spending = filtered_data.groupby('party').agg({
+                'spending': 'mean',
+                **{col: 'mean' for col in tf_columns}
+            }).reset_index()
+            
+            num_parties = len(party_spending)
+            cols_per_row = 3
+            
+            for idx, row in party_spending.iterrows():
+                if idx % cols_per_row == 0:
+                    cols = st.columns(cols_per_row)
+                
+                party_name = row['party']
+                spending = row['spending']
+                
+                # Calculate spending breakdown
+                spending_breakdown = {}
+                accounted_spending = 0
+                
+                for col in tf_columns:
+                    category_name = col.replace('tf_', '').replace('_', ' ').title()
+                    amount = row[col]
+                    if amount > 0: # NOTE: Necessary? UNCLEAR. 
+                        spending_breakdown[category_name] = amount
+                        accounted_spending += amount
+                
+                # Some spending may be unspecified because of mistakes in candidate recording, or lack of reporting due to spending <800. This attempts to account for that.
+                unspecified = spending - accounted_spending
+                if unspecified > 0:
+                    spending_breakdown['Unspecified'] = unspecified
+                
+                # Pie charts have the party & spending breakdown
+                if spending_breakdown:
+                    fig = px.pie(
+                        values=list(spending_breakdown.values()),
+                        names=list(spending_breakdown.keys()),
+                        title=f"{party_name}<br>Avg Total: €{spending:,.0f}"
+                    )
+                    fig.update_traces(textposition='inside', textinfo='percent+label')
+                    
+                    with cols[idx % cols_per_row]:
+                        st.plotly_chart(fig, use_container_width=True)
 
 # -----------------------------
 # PAGE 3: SCENARIO SIMULATOR
@@ -276,7 +339,7 @@ elif page == "Scenario Simulator":
         st.subheader("Campaign Parameters")
         
         sim_spending = st.number_input(
-            "Total Spending ($)",
+            "Total Spending (€)",
             min_value=0,
             max_value=500000,
             value=50000,
@@ -354,7 +417,7 @@ elif page == "Scenario Simulator":
         
         fig.update_layout(
             title="Your Scenario in Context",
-            xaxis_title="Total Spending ($)",
+            xaxis_title="Total Spending (€)",
             yaxis_title="Vote Share (%)",
             hovermode='closest'
         )
@@ -384,7 +447,7 @@ elif page == "Scenario Simulator":
         st.markdown(f"""
         - **Your predicted vote share**: {predicted_vote:.1f}%
         - **Average for similar campaigns**: {avg_similar_vote:.1f}%
-        - **Estimated ROI**: ${sim_spending / max(predicted_vote, 0.1):,.0f} per percentage point
+        - **Estimated ROI**: €{sim_spending / max(predicted_vote, 0.1):,.0f} per percentage point
         """)
 
 # -----------------------------
@@ -409,7 +472,7 @@ elif page == "Deep Dive":
             
             st.markdown(f"""
             **Interpretation**: 
-            - Every $1,000 increase in spending is associated with a 
+            - Every €1,000 increase in spending is associated with a 
             {model.coef_[0] * 1000:.3f} percentage point increase in vote share.
             - The model explains {r_squared*100:.1f}% of variance in vote share.
             """)
