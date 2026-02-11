@@ -7,14 +7,12 @@ from sklearn.linear_model import LinearRegression
 import os.path
 import statsmodels
 
-# Page configuration
 st.set_page_config(
     page_title="Campaign Finance Effectiveness Analysis",
     page_icon="📊",
     layout="wide"
 )
 
-# Sidebar navigation
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", [
     "Loading Page",
@@ -49,8 +47,7 @@ def train_model(data, elec_id):
     
     model = LinearRegression()
     model.fit(X, y)
-    
-    # Predictions and residuals
+
     predictions = model.predict(X)
     residuals = y - predictions
     
@@ -133,7 +130,6 @@ elif page == "Summary":
                                               help=f"Normalizes vote percentages based on the municipal election with the most candidates ({largest_municipality_info["year"]} {largest_municipality_info["municipality"]}), thereby simulating how they would preform in said election. This accounts for varying competition levels - a 5% vote share means more in a 100-candidate race than a 20-candidate race."
                                               )
 
-        # Prepare data based on normalization choice
         if normalize_by_candidates:
             plot_data = data.copy()
             plot_data['spending_plot'] = plot_data['total_raised']
@@ -198,16 +194,14 @@ elif page == "Summary":
     }).round(2)
     party_stats.columns = ['Avg Spending', "Median Spending", 'Avg Vote Share', "Median Vote Share", 'Anomaly Count', 'Total Candidates']
 
-    # Calculate percentage
     party_stats['Anomaly %'] = (party_stats['Anomaly Count'] / party_stats['Total Candidates'] * 100).round(2)
 
-    # Select and reorder columns
     party_stats = party_stats[['Avg Spending', "Median Spending", 'Avg Vote Share', "Median Vote Share", 'Total Candidates', 'Anomaly %']]
 
     st.dataframe(party_stats, use_container_width=True)
 
 # -----------------------------
-# PAGE 2: INTERACTIVE Data
+# PAGE 2: Interactive Data
 # -----------------------------
 elif page == "Interactive Data":
     st.title("Interactive Data")
@@ -242,8 +236,7 @@ elif page == "Interactive Data":
     )
     
     show_anomalies_only = st.sidebar.checkbox("Show Anomalies Only", value=False)
-    
-    # Filter data
+
     filtered_data = data[
         (data['year'].isin(selected_years)) &
         (data['party'].isin(selected_parties)) &
@@ -473,12 +466,10 @@ elif page == "Scenario Simulator":
         model_prediction_vals = [sim_spending,sim_num_candidates,sim_no_incumbency_key,sim_multi_election] if election_id == "municipal" else [sim_spending,sim_num_candidates,sim_no_incumbency_key] #NOTE: Shitty fix
         predicted_vote = model.predict([model_prediction_vals])[0]
         
-        # Calculate confidence interval (simplified)
         residual_std = np.std(data['residual'])
         ci_lower = predicted_vote - 1.96 * residual_std
         ci_upper = predicted_vote + 1.96 * residual_std
-        
-        # Display prediction
+
         col_a, col_b, col_c = st.columns(3)
         with col_a:
             st.metric("Predicted Vote Share", f"{predicted_vote:.1f}%")
@@ -487,14 +478,12 @@ elif page == "Scenario Simulator":
         with col_c:
             st.metric("95% CI Upper", f"{ci_upper:.1f}%")
         
-        # Visualization showing where this falls
         fig = go.Figure()
 
         filtered_data = data[
             (data['municipality'] == sim_municipality)
             ]
 
-        # Add all data points
         fig.add_trace(go.Scatter(
             x=filtered_data['total_raised'],
             y=filtered_data['vote_prct'],
@@ -637,6 +626,7 @@ elif page == "Methodology":
             - Age, Gender: Potential correlating variables that weren't included due to P values >0.14.
             - % Self Funding, breaking Total Funding by category: Self funding is by far the most prevalent form of funding, so I imagined that it could have statistical relevancy, but its P was = 0.8. There was simply to much noise for individualized funding categories (with a limited dataset, other potential correlatory variables such as party) that they weren't included, but it could be good for a greater regression equation.
             - Party, Municipality: Municipality has clear explanatory impact (Brought R^2 to 0.6), Party less so though still significant (extra 0.05 R^2). Number of candidates used as a proxy for municipality due to continuous regression, categorical was seen as a bit to noisy for this specific explanation but could be relevant later.
+            - Parliamentary: Weak correlation so not currently included. Ongoing.
         
         ### Limitations
         - The dataset is ONLY for candidates who submitted financial information, which is only required from successful candidates. You can see through the box plot below how the std and means differ between all candidates and those who submitted financial information. Likely still relevancy in candidate success - more who didn't succeed submitted financial information then I expected - but define caveat that these results are biased to candidates who were more likely to be successful and about half of the vote was not included in this dataframe.
@@ -684,32 +674,6 @@ elif page == "Methodology":
         )
 
         st.plotly_chart(fig, use_container_width=True)
-
-    # with tab3:
-    #     st.subheader("Download Filtered Data")
-    #
-    #     # Allow users to select what to download
-    #     download_anomalies = st.checkbox("Include only anomalies", value=False)
-    #
-    #     if download_anomalies:
-    #         download_data = data[data['is_anomaly']]
-    #     else:
-    #         download_data = data
-    #
-    #     csv = download_data.to_csv(index=False)
-    #
-    #     st.download_button(
-    #         label="Download CSV",
-    #         data=csv,
-    #         file_name="campaign_finance_analysis.csv",
-    #         mime="text/csv"
-    #     )
-    #
-    #     st.info(f"Ready to download: {len(download_data):,} records")
-    #
-    #     # Preview
-    #     st.subheader("Data Preview")
-    #     st.dataframe(download_data.head(100), use_container_width=True)
 
 # Footer
 st.sidebar.markdown("---")
