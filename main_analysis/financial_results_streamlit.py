@@ -17,6 +17,7 @@ st.set_page_config(
 # Sidebar navigation
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", [
+    "Loading Page",
     "Summary",
     "Interactive Data",
     "Scenario Simulator",
@@ -27,22 +28,23 @@ page = st.sidebar.radio("Go to", [
 # DATA LOADING & PREPROCESSING
 # -----------------------------
 
+# Constants
+election_id = "parliamentary"
+model_training_data = {"parliamentary":['total_raised', "num_candidates_in_municipality", "incumbency_None"], "municipal":['total_raised', "num_candidates_in_municipality", "incumbency_None", "multi_election_Kyllä"]}
+
 @st.cache_data
-def load_data():
-    """
-    Replace this with your actual data loading.
-    For now, generating synthetic data to demonstrate structure.
-    """
+def load_data(elec_id):
     dir_name = os.path.abspath(os.path.dirname(__file__))
-    location = os.path.join(dir_name, 'files/outputs/financial_analysis_data.csv')
+    location = os.path.join(dir_name, f'files/outputs/{elec_id}_financial_analysis_data.csv')
 
     data = pd.read_csv(location)
     return data
 
 @st.cache_resource
-def train_model(data):
+def train_model(data, elec_id):
     """Train regression model and identify anomalies"""
-    X = data[['total_raised', "num_candidates_in_municipality", "incumbency_None", "multi_election_Kyllä"]].values
+    print(model_training_data[elec_id])
+    X = data[model_training_data[elec_id]].values
     y = data['vote_prct'].values
     
     model = LinearRegression()
@@ -65,8 +67,8 @@ def train_model(data):
     return model, data
 
 # Load data
-data = load_data()
-model, data = train_model(data)
+data = load_data(election_id)
+model, data = train_model(data, election_id)
 
 # Other useful data
 largest_municipality_info = {
@@ -75,10 +77,32 @@ largest_municipality_info = {
     "year": data.loc[data['num_candidates_in_municipality'].idxmax(), 'year']}
 
 # -----------------------------
+# PAGE 0: LOADING PAGE
+# -----------------------------
+
+if page == "Loading Page":
+    st.title("Loading Page")
+    left, right = st.columns(2)
+    if left.button("Load Parliamentary Data", width="stretch"):
+        left.markdown("Loading parliamentary data...")
+        election_id = "parliamentary"
+        data = load_data(election_id)
+        train_model(data, election_id)
+        left.markdown("Finished!")
+    elif right.button("Load Municipal Data", width="stretch"):
+        left.markdown("Loading municipal data...")
+        election_id = "municipal"
+        data = load_data(election_id)
+        train_model(data, election_id)
+        left.markdown("Finished!")
+
+
+
+# -----------------------------
 # PAGE 1: SUMMARY
 # -----------------------------
 
-if page == "Summary":
+elif page == "Summary":
     st.title("Campaign Finance Effectiveness Analysis")
     st.markdown("### Summary")
     
@@ -94,7 +118,7 @@ if page == "Summary":
         anomaly_pct = (data['is_anomaly'].sum() / len(data)) * 100
         st.metric("Anomalies", f"{anomaly_pct:.1f}%")
     with col4:
-        r_squared = model.score(data[['total_raised', "num_candidates_in_municipality", "incumbency_None", "multi_election_Kyllä"]], data['vote_prct'])
+        r_squared = model.score(data[model_training_data[election_id]], data['vote_prct'])
         st.metric("Model R²", f"{r_squared:.3f}")
     
     st.markdown("---")
@@ -430,7 +454,9 @@ elif page == "Scenario Simulator":
         sim_municipality = st.selectbox("Municipality", options=sorted(data['municipality'].unique()))
         sim_year = st.selectbox("Year", options=sorted(data['year'].unique()))
         sim_incumbent = st.checkbox("Previous Political Office?", value=False)
-        sim_multi_election = st.checkbox("Ran in Multiple Elections (2025 Onwards)?", value=False, help="Starting in the 2025 municipal elections, candidates who ran in two races (i.e. municipal and welfare) submitted a joint financial statement. To isolate the effects this may have, this data was included in the regression analysis. More investigation is required to ensure the correct approach.")
+
+        run_multi_election = True if election_id == "municipal" else False
+        sim_multi_election = st.checkbox("Ran in Multiple Elections (2025 Onwards)?", value=False, help="Starting in the 2025 municipal elections, candidates who ran in two races (i.e. municipal and welfare) submitted a joint financial statement. To isolate the effects this may have, this data was included in the regression analysis. More investigation is required to ensure the correct approach.", disabled=run_multi_election)
 
         sim_no_incumbency_key = False if sim_incumbent else True # NOTE: Currently, the system uses a binary where no incumbency = True. Reversing user selection
         sim_num_candidates = (
@@ -444,7 +470,8 @@ elif page == "Scenario Simulator":
         st.subheader("Predicted Outcome")
         
         # Make prediction
-        predicted_vote = model.predict([[sim_spending,sim_num_candidates,sim_no_incumbency_key,sim_multi_election]])[0]
+        model_prediction_vals = [sim_spending,sim_num_candidates,sim_no_incumbency_key,sim_multi_election] if election_id == "municipal" else [sim_spending,sim_num_candidates,sim_no_incumbency_key] #NOTE: Shitty fix
+        predicted_vote = model.predict([model_prediction_vals])[0]
         
         # Calculate confidence interval (simplified)
         residual_std = np.std(data['residual'])
@@ -543,7 +570,7 @@ elif page == "Methodology":
         col1, col2 = st.columns(2)
         
         with col1:
-            r_squared = model.score(data[['total_raised', "num_candidates_in_municipality", "incumbency_None", "multi_election_Kyllä"]], data['vote_prct'])
+            r_squared = model.score(data[model_training_data[election_id]], data['vote_prct'])
             st.metric("R² Score", f"{r_squared:.4f}")
             st.metric("Intercept", f"{model.intercept_:.4f}")
             st.metric("Coefficient", f"{model.coef_[0]:.6f}")
