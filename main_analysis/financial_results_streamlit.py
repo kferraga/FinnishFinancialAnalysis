@@ -22,12 +22,20 @@ page = st.sidebar.radio("Go to", [
     "Methodology"
 ])
 
+if "election_id" not in st.session_state:
+    st.session_state.election_id = "parliamentary"
+
+if "data" not in st.session_state:
+    st.session_state.data = None
+
+if "model" not in st.session_state:
+    st.session_state.model = None
+
 # -----------------------------
 # DATA LOADING & PREPROCESSING
 # -----------------------------
 
 # Constants
-election_id = "parliamentary"
 model_training_data = {"parliamentary":['total_raised', "num_candidates_in_municipality", "incumbency_None"], "municipal":['total_raised', "num_candidates_in_municipality", "incumbency_None", "multi_election_Kyllä"]}
 
 @st.cache_data
@@ -44,34 +52,45 @@ def train_model(data, elec_id):
     print(model_training_data[elec_id])
     X = data[model_training_data[elec_id]].values
     y = data['vote_prct'].values
-    
+
     model = LinearRegression()
     model.fit(X, y)
 
     predictions = model.predict(X)
     residuals = y - predictions
-    
+
     # Identify anomalies (residuals > 2 std devs)
     std_residual = np.std(residuals)
     data['predicted_vote_share'] = predictions
     data['residual'] = residuals
     data['is_anomaly'] = np.abs(residuals) > 2 * std_residual
     data['anomaly_type'] = data['residual'].apply(
-        lambda x: 'Overperformer' if x > 2 * std_residual 
+        lambda x: 'Overperformer' if x > 2 * std_residual
         else ('Underperformer' if x < -2 * std_residual else 'Normal')
     )
-    
+
     return model, data
 
-# Load data
-data = load_data(election_id)
-model, data = train_model(data, election_id)
+if st.session_state.election_id is not None:
+
+    data = load_data(st.session_state.election_id)
+    model, data = train_model(data, st.session_state.election_id)
+
+    st.session_state.data = data
+    st.session_state.model = model
+
+# else:
+#     data = load_data("parliamentary")
+#     model, data = train_model("parliamentary")
+#
+#     st.session_state.data = data
+#     st.session_state.model = model
 
 # Other useful data
 largest_municipality_info = {
     # I want the name of the normalized municipality to change based on which has the most votes so the scale doesn't change.
-    "municipality": data.loc[data['num_candidates_in_municipality'].idxmax(), 'municipality'],
-    "year": data.loc[data['num_candidates_in_municipality'].idxmax(), 'year']}
+    "municipality": st.session_state.data.loc[data['num_candidates_in_municipality'].idxmax(), 'municipality'],
+    "year": st.session_state.data.loc[data['num_candidates_in_municipality'].idxmax(), 'year']}
 
 # -----------------------------
 # PAGE 0: LOADING PAGE
@@ -80,18 +99,12 @@ largest_municipality_info = {
 if page == "Loading Page":
     st.title("Loading Page")
     left, right = st.columns(2)
+
     if left.button("Load Parliamentary Data", width="stretch"):
-        left.markdown("Loading parliamentary data...")
-        election_id = "parliamentary"
-        data = load_data(election_id)
-        train_model(data, election_id)
-        left.markdown("Finished!")
-    elif right.button("Load Municipal Data", width="stretch"):
-        left.markdown("Loading municipal data...")
-        election_id = "municipal"
-        data = load_data(election_id)
-        train_model(data, election_id)
-        left.markdown("Finished!")
+        st.session_state.election_id = "parliamentary"
+
+    if right.button("Load Municipal Data", width="stretch"):
+        st.session_state.election_id = "municipal"
 
 
 
@@ -100,29 +113,29 @@ if page == "Loading Page":
 # -----------------------------
 
 elif page == "Summary":
-    st.title("Campaign Finance Effectiveness Analysis")
+    st.title(f"Campaign Finance Effectiveness Analysis: {st.session_state.election_id.capitalize()}")
     st.markdown("### Summary")
-    
+
     # Key metrics
     col1, col2, col3, col4 = st.columns(4)
-    
+
     with col1:
-        st.metric("Total Candidates", f"{len(data):,}")
+        st.metric("Total Candidates", f"{len(st.session_state.data):,}")
     with col2:
-        avg_spending = data['total_raised'].mean()
+        avg_spending = st.session_state.data['total_raised'].mean()
         st.metric("Avg Spending", f"€{avg_spending:,.0f}")
     with col3:
-        anomaly_pct = (data['is_anomaly'].sum() / len(data)) * 100
+        anomaly_pct = (st.session_state.data['is_anomaly'].sum() / len(st.session_state.data)) * 100
         st.metric("Anomalies", f"{anomaly_pct:.1f}%")
     with col4:
-        r_squared = model.score(data[model_training_data[election_id]], data['vote_prct'])
+        r_squared = st.session_state.model.score(st.session_state.data[model_training_data[st.session_state.election_id]], st.session_state.data['vote_prct'])
         st.metric("Model R²", f"{r_squared:.3f}")
-    
+
     st.markdown("---")
-    
+
     # Main visualization: Spending vs Vote Share
     col1, col2 = st.columns([2, 1])
-    
+
     with col1:
         st.subheader("Spending Effectiveness Overview")
 
@@ -131,18 +144,18 @@ elif page == "Summary":
                                               )
 
         if normalize_by_candidates:
-            plot_data = data.copy()
+            plot_data = st.session_state.data.copy()
             plot_data['spending_plot'] = plot_data['total_raised']
             plot_data['vote_share_plot'] = plot_data['normalized_vote_prct']
             x_label = 'Total Spending (€)'
             y_label = f'{largest_municipality_info["year"]} {largest_municipality_info["municipality"]} Normalized Vote Share (%)'
         else:
-            plot_data = data.copy()
+            plot_data = st.session_state.data.copy()
             plot_data['spending_plot'] = plot_data['total_raised']
             plot_data['vote_share_plot'] = plot_data['vote_prct']
             x_label = 'Total Spending (€)'
             y_label = 'Vote Share (%)'
-        
+
         fig = px.scatter(
             plot_data,
             x='spending_plot',
@@ -158,16 +171,16 @@ elif page == "Summary":
             title="Campaign Spending vs Vote Share" + (" (Normalized)" if normalize_by_candidates else ""),
             trendline="ols"
         )
-        
+
         st.plotly_chart(fig, use_container_width=True)
-    
+
     with col2:
         st.subheader("Anomaly Stats")
-        
-        overperformers = data[data['anomaly_type'] == 'Overperformer']
-        normal = data[data['anomaly_type'] == 'Normal']
-        underperformers = data[data['anomaly_type'] == 'Underperformer']
-        
+
+        overperformers = st.session_state.data[st.session_state.data['anomaly_type'] == 'Overperformer']
+        normal = st.session_state.data[st.session_state.data['anomaly_type'] == 'Normal']
+        underperformers = st.session_state.data[st.session_state.data['anomaly_type'] == 'Underperformer']
+
         st.markdown(f"""
         **Overperformers** ({len(overperformers)} candidates)
         - Avg raised: €{overperformers['total_raised'].mean():,.0f}
@@ -183,11 +196,11 @@ elif page == "Summary":
         """)
 
         st.info("Every €10,000 spent is associated with approximately a "
-                f"{model.coef_[0] * 10000:.2f}% point increase in vote share.")
-    
+                f"{st.session_state.model.coef_[0] * 10000:.2f}% point increase in vote share.")
+
     # Party comparison
     st.subheader("Spending Efficiency by Party", help="NOTE: This is ONLY for candidates who reported financial information.")
-    party_stats = data.groupby('party').agg({
+    party_stats = st.session_state.data.groupby('party').agg({
         'total_raised': ['mean', "median"],
         'vote_prct': ['mean', "median"],
         'is_anomaly': ['sum', 'count']
@@ -205,54 +218,54 @@ elif page == "Summary":
 # -----------------------------
 elif page == "Interactive Data":
     st.title("Interactive Data")
-    
+
     # SIDEBAR (Filters for people to interact with the data)
     st.sidebar.header("Filters")
-    
+
     selected_years = st.sidebar.multiselect(
         "Election Year",
-        options=sorted(data['year'].unique()), # What options are available to select
-        default=sorted(data['year'].unique()) # What options are pre-selected
+        options=sorted(st.session_state.data['year'].unique()), # What options are available to select
+        default=sorted(st.session_state.data['year'].unique()) # What options are pre-selected
     )
-    
+
     selected_parties = st.sidebar.multiselect(
         "Party",
-        options=sorted(data['party'].unique()),
-        default=sorted(data['party'].unique())
+        options=sorted(st.session_state.data['party'].unique()),
+        default=sorted(st.session_state.data['party'].unique())
     )
-    
+
     selected_districts = st.sidebar.multiselect(
         "Municipality",
-        options=sorted(data['municipality'].unique()),
-        default=sorted(data['municipality'].unique())
+        options=sorted(st.session_state.data['municipality'].unique()),
+        default=sorted(st.session_state.data['municipality'].unique())
     )
-    
+
     spending_range = st.sidebar.slider(
         "Spending Range (€)",
-        min_value=int(data['total_raised'].min()),
-        max_value=int(data['total_raised'].max()),
-        value=(int(data['total_raised'].min()), int(data['total_raised'].max())),
+        min_value=int(st.session_state.data['total_raised'].min()),
+        max_value=int(st.session_state.data['total_raised'].max()),
+        value=(int(st.session_state.data['total_raised'].min()), int(st.session_state.data['total_raised'].max())),
         step=1000
     )
-    
+
     show_anomalies_only = st.sidebar.checkbox("Show Anomalies Only", value=False)
 
-    filtered_data = data[
-        (data['year'].isin(selected_years)) &
-        (data['party'].isin(selected_parties)) &
+    filtered_data = st.session_state.data[
+        (st.session_state.data['year'].isin(selected_years)) &
+        (st.session_state.data['party'].isin(selected_parties)) &
         # (data['municipality'].isin(selected_districts)) &
-        (data['total_raised'] >= spending_range[0]) &
-        (data['total_raised'] <= spending_range[1])
+        (st.session_state.data['total_raised'] >= spending_range[0]) &
+        (st.session_state.data['total_raised'] <= spending_range[1])
     ]
-    
+
     if show_anomalies_only:
         filtered_data = filtered_data[filtered_data['is_anomaly']]
-    
-    st.info(f"Showing {len(filtered_data):,} candidates (filtered from {len(data):,} total)")
-    
+
+    st.info(f"Showing {len(filtered_data):,} candidates (filtered from {len(st.session_state.data):,} total)")
+
     # Visualization tabs
     tab1, tab2, tab3, tab4, tab5 = st.tabs(["Scatter Plot", "Distribution", "Anomalies", "Funding Breakdown", "Spending Breakdown"])
-    
+
     with tab1:
         normalize_by_candidates_scatter = st.checkbox("Normalize by number of candidates", value=True, key="normalize_scatter",
                                               help=f"Normalizes vote percentages based on the municipal election with the most candidates ({largest_municipality_info["year"]} {largest_municipality_info["municipality"]}), thereby simulating how they would preform in said election. This accounts for varying competition levels - a 5% vote share means more in a 100-candidate race than a 20-candidate race."
@@ -268,7 +281,7 @@ elif page == "Interactive Data":
             labels={'total_raised': 'Total Spending (€)', vote_column: title}
         )
         st.plotly_chart(fig, use_container_width=True)
-    
+
     with tab2:
         normalize_by_candidates_distribution = st.checkbox("Normalize by number of candidates", value=True, key="normalize_distribution",
                                               help=f"Normalizes vote percentages based on the municipal election with the most candidates ({largest_municipality_info["year"]} {largest_municipality_info["municipality"]}), thereby simulating how they would preform in said election. This accounts for varying competition levels - a 5% vote share means more in a 100-candidate race than a 20-candidate race."
@@ -283,14 +296,14 @@ elif page == "Interactive Data":
 
             fig = px.histogram(filtered_data, x=vote_column, nbins=50, title=title)
             st.plotly_chart(fig, use_container_width=True)
-    
+
     with tab3:
         st.subheader("Strongest Overperformers")
         top_overperformers = filtered_data[
             filtered_data['anomaly_type'] == 'Overperformer'
         ].nlargest(10, 'residual')[['full_name', 'party', 'total_raised', 'vote_prct', 'predicted_vote_share', 'residual']]
         st.dataframe(top_overperformers, use_container_width=True)
-        
+
         st.subheader("Worst Underperformers")
         top_underperformers = filtered_data[
             filtered_data['anomaly_type'] == 'Underperformer'
@@ -430,12 +443,12 @@ elif page == "Interactive Data":
 elif page == "Scenario Simulator":
     st.title("Scenario Simulator")
     st.markdown("Input campaign parameters to see predicted outcomes.")
-    
+
     col1, col2 = st.columns([1, 2])
-    
+
     with col1:
         st.subheader("Campaign Parameters")
-        
+
         sim_spending = st.number_input(
             "Total Spending (€)",
             min_value=0,
@@ -444,29 +457,29 @@ elif page == "Scenario Simulator":
             step=1000
         )
 
-        sim_municipality = st.selectbox("Municipality", options=sorted(data['municipality'].unique()))
-        sim_year = st.selectbox("Year", options=sorted(data['year'].unique()))
+        sim_municipality = st.selectbox("Municipality", options=sorted(st.session_state.data['municipality'].unique()))
+        sim_year = st.selectbox("Year", options=sorted(st.session_state.data['year'].unique()))
         sim_incumbent = st.checkbox("Previous Political Office?", value=False)
 
-        run_multi_election = True if election_id == "municipal" else False
+        run_multi_election = True if st.session_state.election_id == "municipal" else False
         sim_multi_election = st.checkbox("Ran in Multiple Elections (2025 Onwards)?", value=False, help="Starting in the 2025 municipal elections, candidates who ran in two races (i.e. municipal and welfare) submitted a joint financial statement. To isolate the effects this may have, this data was included in the regression analysis. More investigation is required to ensure the correct approach.", disabled=run_multi_election)
 
         sim_no_incumbency_key = False if sim_incumbent else True # NOTE: Currently, the system uses a binary where no incumbency = True. Reversing user selection
         sim_num_candidates = (
-            data.loc[(data['municipality'] == sim_municipality) & (data['year'] == sim_year), 'num_candidates_in_municipality']
+            st.session_state.data.loc[(st.session_state.data['municipality'] == sim_municipality) & (st.session_state.data['year'] == sim_year), 'num_candidates_in_municipality']
             .iloc[0]  # Expect all num_candidates, given the same municipality and year, to be the same.
         )
         st.markdown("---")
         st.button("🔄 Run Simulation", type="primary")
-    
+
     with col2:
         st.subheader("Predicted Outcome")
-        
+
         # Make prediction
-        model_prediction_vals = [sim_spending,sim_num_candidates,sim_no_incumbency_key,sim_multi_election] if election_id == "municipal" else [sim_spending,sim_num_candidates,sim_no_incumbency_key] #NOTE: Shitty fix
-        predicted_vote = model.predict([model_prediction_vals])[0]
-        
-        residual_std = np.std(data['residual'])
+        model_prediction_vals = [sim_spending,sim_num_candidates,sim_no_incumbency_key,sim_multi_election] if st.session_state.election_id == "municipal" else [sim_spending,sim_num_candidates,sim_no_incumbency_key] #NOTE: Shitty fix
+        predicted_vote = st.session_state.model.predict([model_prediction_vals])[0]
+
+        residual_std = np.std(st.session_state.data['residual'])
         ci_lower = predicted_vote - 1.96 * residual_std
         ci_upper = predicted_vote + 1.96 * residual_std
 
@@ -477,11 +490,11 @@ elif page == "Scenario Simulator":
             st.metric("95% CI Lower", f"{ci_lower:.1f}%")
         with col_c:
             st.metric("95% CI Upper", f"{ci_upper:.1f}%")
-        
+
         fig = go.Figure()
 
-        filtered_data = data[
-            (data['municipality'] == sim_municipality)
+        filtered_data = st.session_state.data[
+            (st.session_state.data['municipality'] == sim_municipality)
             ]
 
         fig.add_trace(go.Scatter(
@@ -501,7 +514,7 @@ elif page == "Scenario Simulator":
             marker=dict(color='red', size=15, symbol='star'),
             name='Scenario'
         ))
-        
+
         # Add confidence interval
         fig.add_trace(go.Scatter(
             x=[sim_spending, sim_spending],
@@ -510,23 +523,23 @@ elif page == "Scenario Simulator":
             line=dict(color='red', width=2),
             name='95% Confidence'
         ))
-        
+
         fig.update_layout(
             title="All Candidates From Municipality",
             xaxis_title="Total Spending (€)",
             yaxis_title="Vote Share (%)",
             hovermode='closest'
         )
-        
+
         st.plotly_chart(fig, use_container_width=True)
-        
+
         # Find similar candidates
         st.subheader("Similar Historical Campaigns")
-        similar = data[
-            (data['municipality'] == sim_municipality) &
-            (data['total_raised'].between(sim_spending * 0.8, sim_spending * 1.2))
+        similar = st.session_state.data[
+            (st.session_state.data['municipality'] == sim_municipality) &
+            (st.session_state.data['total_raised'].between(sim_spending * 0.8, sim_spending * 1.2))
         ].sort_values('total_raised')
-        
+
         if len(similar) > 0:
             st.dataframe(
                 similar[['full_name', 'year', "municipality", 'total_raised', 'vote_prct', 'anomaly_type']].head(10),
@@ -534,11 +547,11 @@ elif page == "Scenario Simulator":
             )
         else:
             st.warning("No similar campaigns found with these parameters.")
-        
+
         # Efficiency score
         st.subheader("Efficiency Analysis")
         avg_similar_vote = similar['vote_prct'].mean() if len(similar) > 0 else predicted_vote
-        
+
         st.markdown(f"""
         - **Your predicted vote share**: {predicted_vote:.1f}%
         - **Average for similar campaigns**: {avg_similar_vote:.1f}%
@@ -550,31 +563,31 @@ elif page == "Scenario Simulator":
 
 elif page == "Methodology":
     st.title("Methodology")
-    
+
     tab1, tab2 = st.tabs(["Model Diagnostics", "Methodology"])
-    
+
     with tab1:
         st.subheader("Regression Model Performance")
-        
+
         col1, col2 = st.columns(2)
-        
+
         with col1:
-            r_squared = model.score(data[model_training_data[election_id]], data['vote_prct'])
+            r_squared = st.session_state.model.score(st.session_state.data[model_training_data[st.session_state.election_id]], st.session_state.data['vote_prct'])
             st.metric("R² Score", f"{r_squared:.4f}")
-            st.metric("Intercept", f"{model.intercept_:.4f}")
-            st.metric("Coefficient", f"{model.coef_[0]:.6f}")
-            
+            st.metric("Intercept", f"{st.session_state.model.intercept_:.4f}")
+            st.metric("Coefficient", f"{st.session_state.model.coef_[0]:.6f}")
+
             st.markdown(f"""
             **Interpretation**: 
             - Every €1,000 increase in total_raised is associated with a 
-            {model.coef_[0] * 1000:.3f} percentage point increase in vote share.
+            {st.session_state.model.coef_[0] * 1000:.3f} percentage point increase in vote share.
             - The model explains {r_squared*100:.1f}% of variance in vote share.
             """)
-        
+
         with col2:
             # Residual plot
             fig = px.scatter(
-                data,
+                st.session_state.data,
                 x='predicted_vote_share',
                 y='residual',
                 color='is_anomaly',
@@ -583,16 +596,16 @@ elif page == "Methodology":
             )
             fig.add_hline(y=0, line_dash="dash", line_color="gray")
             st.plotly_chart(fig, use_container_width=True)
-        
+
         # Distribution of residuals
         fig = px.histogram(
-            data,
+            st.session_state.data,
             x='residual',
             nbins=50,
             title="Distribution of Residuals"
         )
         st.plotly_chart(fig, use_container_width=True)
-    
+
     with tab2:
         st.subheader("Methodology")
         all_candidate_description = {
@@ -605,7 +618,7 @@ elif page == "Methodology":
             '75%': 72.0,
             'max': 29745.0
         } # Can preform df["Total number of votes"].describe() on municipal_election_results_by_candidate.csv in outputs to gather this.
-        financial_candidate_description = data["Total number of votes"].describe().to_dict()
+        financial_candidate_description = st.session_state.data["Total number of votes"].describe().to_dict()
 
 
         st.markdown("""
