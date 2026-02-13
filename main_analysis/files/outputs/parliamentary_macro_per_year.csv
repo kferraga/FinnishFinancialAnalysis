@@ -1,0 +1,55 @@
+,Name of a municipality/electoral district/voting area in Finnish,Year,num_candidates,total_votes
+0,Ahvenanmaan maakunnan vaalipiiri,2011,8,10503
+1,Ahvenanmaan maakunnan vaalipiiri,2015,7,12187
+2,Ahvenanmaan maakunnan vaalipiiri,2019,5,13076
+3,Ahvenanmaan maakunnan vaalipiiri,2023,15,13383
+4,Etelä-Savon vaalipiiri,2011,94,83432
+5,Helsingin vaalipiiri,2011,267,347885
+6,Helsingin vaalipiiri,2015,269,359875
+7,Helsingin vaalipiiri,2019,286,385560
+8,Helsingin vaalipiiri,2023,293,388501
+9,Hämeen vaalipiiri,2011,132,202689
+10,Hämeen vaalipiiri,2015,127,202446
+11,Hämeen vaalipiiri,2019,155,205738
+12,Hämeen vaalipiiri,2023,144,207266
+13,Kaakkois-Suomen vaalipiiri,2015,149,245545
+14,Kaakkois-Suomen vaalipiiri,2019,179,244974
+15,Kaakkois-Suomen vaalipiiri,2023,158,228628
+16,Keski-Suomen vaalipiiri,2011,141,148433
+17,Keski-Suomen vaalipiiri,2015,127,151269
+18,Keski-Suomen vaalipiiri,2019,153,154375
+19,Keski-Suomen vaalipiiri,2023,146,153254
+20,Kymen vaalipiiri,2011,118,169102
+21,Lapin vaalipiiri,2011,114,99357
+22,Lapin vaalipiiri,2015,118,100871
+23,Lapin vaalipiiri,2019,122,99807
+24,Lapin vaalipiiri,2023,112,97904
+25,Oulun vaalipiiri,2011,156,243662
+26,Oulun vaalipiiri,2015,165,249652
+27,Oulun vaalipiiri,2019,184,258858
+28,Oulun vaalipiiri,2023,177,261715
+29,Pirkanmaan vaalipiiri,2011,207,273920
+30,Pirkanmaan vaalipiiri,2015,203,278073
+31,Pirkanmaan vaalipiiri,2019,251,299154
+32,Pirkanmaan vaalipiiri,2023,239,309941
+33,Pohjois-Karjalan vaalipiiri,2011,108,87185
+34,Pohjois-Savon vaalipiiri,2011,118,131369
+35,Satakunnan vaalipiiri,2011,97,126108
+36,Satakunnan vaalipiiri,2015,126,122334
+37,Satakunnan vaalipiiri,2019,117,124871
+38,Satakunnan vaalipiiri,2023,124,119611
+39,Savo-Karjalan vaalipiiri,2015,139,216880
+40,Savo-Karjalan vaalipiiri,2019,165,221529
+41,Savo-Karjalan vaalipiiri,2023,156,224357
+42,Uudenmaan vaalipiiri,2011,406,507189
+43,Uudenmaan vaalipiiri,2015,394,520119
+44,Uudenmaan vaalipiiri,2019,492,546672
+45,Uudenmaan vaalipiiri,2023,485,565306
+46,Vaasan vaalipiiri,2011,158,248881
+47,Vaasan vaalipiiri,2015,156,245817
+48,Vaasan vaalipiiri,2019,168,250901
+49,Vaasan vaalipiiri,2023,161,246966
+50,Varsinais-Suomen vaalipiiri,2011,191,259856
+51,Varsinais-Suomen vaalipiiri,2015,166,263394
+52,Varsinais-Suomen vaalipiiri,2019,191,276401
+53,Varsinais-Suomen vaalipiiri,2023,214,278772
